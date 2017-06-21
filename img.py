@@ -3,6 +3,10 @@ import cv2
 from matplotlib import pyplot as plt
 import os
 
+#----------------------------------
+# Loading all images from folder
+#----------------------------------
+
 def load_images_from_folder(folder):
     images = []
     for filename in os.listdir(folder):
@@ -11,28 +15,13 @@ def load_images_from_folder(folder):
             images.append(img)
     return images
 
-# img = None
-# for f in files:
 
 data_images = load_images_from_folder('.');
 print(data_images);
-#img = cv2.imread('1.jpg',0)
-#----------------------------------
 
+# Global index value of image current postion.
 index = 0
-
-# def toggle_images(event):
-#     global index
-
-#     index += 1
-
-#     if index < len(data_images):
-#         plt.imshow(data_images[index])
-#         plt.draw()
-#     else:        
-#         plt.close()
-
-#----------------------------------
+    
 
 #----------------------------------
 # On Click event listner for capturing coordinates in image
@@ -61,16 +50,16 @@ cid = plt.connect('button_press_event', onclick)
 #----------------------------------
 
 def on_key(event):
-    global index
-    
     if event.key == "right":
+        global index
+
         index += 1
 
         if index < len(data_images):
             plt.imshow(data_images[index])
             plt.draw()
         else:        
-            #plt.close()
+            plt.close()
     
     if event.key == "left":
         index -= 1
@@ -79,16 +68,11 @@ def on_key(event):
             plt.imshow(data_images[index])
             plt.draw()
         else:        
-            #plt.close()
+            plt.close()
     
-
 pid = plt.connect('key_press_event', on_key)
 
-
 plt.imshow(data_images[index])
-
-#plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
 plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-
 plt.show();
 
