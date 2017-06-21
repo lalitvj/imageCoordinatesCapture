@@ -34,6 +34,10 @@ index = 0
 
 #----------------------------------
 
+#----------------------------------
+# On Click event listner for capturing coordinates in image
+# On double tap will get points
+#----------------------------------
 
 def onclick(event):
     if event.dblclick:
@@ -48,8 +52,38 @@ def onclick(event):
     else:
 		print(event)    		
     	
-        
 cid = plt.connect('button_press_event', onclick)
+
+#----------------------------------
+# On key press event listner for capturing keyboard actions
+# On right arrow -> next image is shown
+# On left arrow -> previous image is shown 
+#----------------------------------
+
+def on_key(event):
+    global index
+    
+    if event.key == "right":
+        index += 1
+
+        if index < len(data_images):
+            plt.imshow(data_images[index])
+            plt.draw()
+        else:        
+            #plt.close()
+    
+    if event.key == "left":
+        index -= 1
+
+        if index > -1:
+            plt.imshow(data_images[index])
+            plt.draw()
+        else:        
+            #plt.close()
+    
+
+pid = plt.connect('key_press_event', on_key)
+
 
 plt.imshow(data_images[index])
 
