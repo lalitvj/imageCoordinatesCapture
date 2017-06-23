@@ -6,22 +6,24 @@ import os
 #----------------------------------
 # Loading all images from folder
 #----------------------------------
-
+images = []
+imageName = []
+    
 def load_images_from_folder(folder):
-    images = []
     for filename in sorted(os.listdir(folder)):
         img = cv2.imread(os.path.join(folder,filename))
         if img is not None:
             images.append(img)
+            imageName.append(filename)
     return images
 
 
-data_images = load_images_from_folder('.');
+data_images = load_images_from_folder('./ilika');
 print(data_images);
 
 # Global index value of image current postion.
 index = 0
-    
+imagecordinate =[];    
 
 #----------------------------------
 # On Click event listner for capturing coordinates in image
@@ -31,13 +33,21 @@ index = 0
 def onclick(event):
     if event.dblclick:
     	if event.button == 1:
-	    	#write data for image cordinates
-	    	f = open("earPointData.txt", "a");
-	    	f.write( 'x:'+str(event.xdata) + ',y:' + str(event.ydata) + "\n"  )
-	    	f.close();
+            if len(imagecordinate) == 0:
+                imagecordinate.append(imageName[index]);    
+            imagecordinate.append(event.xdata);
+            imagecordinate.append(event.ydata);
+            #write data for image cordinates
+            if len(imagecordinate) == 5:
+                f = open("earPointData1.txt", "a");
+	    	    #f.write( 'x:'+str(event.xdata) + ',y:' + str(event.ydata) + "\n"  )
+                f.write( str(imagecordinate) + "\n"  )
+                f.close();
+                imagecordinate[:] = [];
 	    	#showing the data on click event
 	    	print('button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
         	  (event.button, event.x, event.y, event.xdata, event.ydata));	
+        
     else:
 		print(event)    		
     	
