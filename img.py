@@ -7,7 +7,7 @@ import os
 #----------------------------------
 # Loading all images from folder
 #----------------------------------
-imageFolder = './train_3_last'
+imageFolder = '../ishaan/train_3_last/'
 resultFile = "result.txt"
 images = []
 imageName = []
@@ -90,8 +90,12 @@ def on_key(event):
         index -= 1
 
         if index > -1:
-            plt.imshow(data_images[index])
-            plt.draw()
+            img=[];
+            img = cv2.imread(os.path.join(imageFolder,data_images[index]))
+            if img is not None:
+                print img
+                plt.imshow(img)
+                plt.draw()
         else:        
             plt.close()
             # index = len(data_images) -1
